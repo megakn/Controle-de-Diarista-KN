@@ -15,10 +15,16 @@
 html,body{margin:0;height:100%;font-family:'Inter','Segoe UI',system-ui,Arial,sans-serif;background:var(--bg);color:var(--dark);-webkit-font-smoothing:antialiased;}
 #hub{display:flex;height:100vh;overflow:hidden;}
 #hubSidebar{width:242px;background:#08243B;color:#fff;flex-shrink:0;display:flex;flex-direction:column;overflow-y:auto;box-shadow:2px 0 12px rgba(0,0,0,.08);}
-.hub-group-head{padding:18px 20px 9px;border-top:1px solid rgba(255,255,255,.1);}
-.hub-group-head:first-child{border-top:none;padding-top:24px;}
-.hub-group-head .logo{font-weight:700;font-size:13.5px;letter-spacing:.4px;text-transform:uppercase;color:rgba(255,255,255,.55);}
+.hub-group{border-top:1px solid rgba(255,255,255,.1);}
+.hub-group:first-child{border-top:none;}
+.hub-group-head{padding:18px 20px 9px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;}
+.hub-group:first-child .hub-group-head{padding-top:24px;}
+.hub-group-head .logo{font-weight:600;font-size:14.5px;letter-spacing:.1px;text-transform:none;color:rgba(255,255,255,.75);}
 .hub-group-head .logo .accent{color:var(--yellow);}
+.hub-group-head .chev{font-size:11px;color:rgba(255,255,255,.4);transition:transform .2s ease;flex-shrink:0;}
+.hub-group.open .hub-group-head .chev{transform:rotate(90deg);}
+.hub-group-items{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.hub-group.open .hub-group-items{max-height:600px;}
 .hub-item{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;color:#d7e4ec;font-size:13.5px;font-weight:500;border-left:3px solid transparent;letter-spacing:.1px;transition:background .12s;}
 .hub-item:hover{background:rgba(255,255,255,.055);color:#fff;}
 .hub-item.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:var(--yellow);font-weight:600;}
@@ -35,33 +41,41 @@ html,body{margin:0;height:100%;font-family:'Inter','Segoe UI',system-ui,Arial,sa
 <body>
 <div id="hub">
   <aside id="hubSidebar">
-    <div class="hub-group-head">
-      <div class="logo">Controle de <span class="accent">Diarista</span> KN</div>
+    <div class="hub-group open" data-group="diaristas">
+      <div class="hub-group-head"><div class="logo">Controle de <span class="accent">Diarista</span> KN</div><span class="chev">&#9656;</span></div>
+      <div class="hub-group-items">
+        <div class="hub-item" data-mod="diaristas" data-target="dashboard"><span class="ic">&#128202;</span>Dashboard</div>
+        <div class="hub-item" data-mod="diaristas" data-target="banco"><span class="ic">&#128100;</span>Banco de Diaristas</div>
+        <div class="hub-item" data-mod="diaristas" data-target="importar"><span class="ic">&#8593;</span>Importar Listagem</div>
+        <div class="hub-item" data-mod="diaristas" data-target="controle"><span class="ic">&#128197;</span>Controle Diário</div>
+        <div class="hub-item" data-mod="diaristas" data-target="config"><span class="ic">&#9881;</span>Configurações</div>
+      </div>
     </div>
-    <div class="hub-item" data-mod="diaristas" data-target="dashboard"><span class="ic">&#128202;</span>Dashboard</div>
-    <div class="hub-item" data-mod="diaristas" data-target="banco"><span class="ic">&#128100;</span>Banco de Diaristas</div>
-    <div class="hub-item" data-mod="diaristas" data-target="importar"><span class="ic">&#8593;</span>Importar Listagem</div>
-    <div class="hub-item" data-mod="diaristas" data-target="controle"><span class="ic">&#128197;</span>Controle Diário</div>
-    <div class="hub-item" data-mod="diaristas" data-target="config"><span class="ic">&#9881;</span>Configurações</div>
 
-    <div class="hub-group-head">
-      <div class="logo">Gerador de <span class="accent">Escala</span></div>
+    <div class="hub-group" data-group="escala">
+      <div class="hub-group-head"><div class="logo">Gerador de <span class="accent">Escala</span></div><span class="chev">&#9656;</span></div>
+      <div class="hub-group-items">
+        <div class="hub-item" data-mod="escala" data-target="dados"><span class="ic">&#128228;</span>Envie os dados</div>
+        <div class="hub-item" data-mod="escala" data-target="resultado"><span class="ic">&#128203;</span>Resultado</div>
+        <div class="hub-item" data-mod="escala" data-target="folgas"><span class="ic">&#128198;</span>Configurar folgas por escala</div>
+        <div class="hub-item" data-mod="escala" data-target="lideranca"><span class="ic">&#128101;</span>Líderes, Conferentes e Coordenadores</div>
+        <div class="hub-item" data-mod="escala" data-target="consulta"><span class="ic">&#128269;</span>Consultar quem está de folga</div>
+      </div>
     </div>
-    <div class="hub-item" data-mod="escala" data-target="dados"><span class="ic">&#128228;</span>Envie os dados</div>
-    <div class="hub-item" data-mod="escala" data-target="resultado"><span class="ic">&#128203;</span>Resultado</div>
-    <div class="hub-item" data-mod="escala" data-target="folgas"><span class="ic">&#128198;</span>Configurar folgas por escala</div>
-    <div class="hub-item" data-mod="escala" data-target="lideranca"><span class="ic">&#128101;</span>Líderes, Conferentes e Coordenadores</div>
-    <div class="hub-item" data-mod="escala" data-target="consulta"><span class="ic">&#128269;</span>Consultar quem está de folga</div>
 
-    <div class="hub-group-head">
-      <div class="logo">Credenciais &amp; <span class="accent">Crachás</span></div>
+    <div class="hub-group" data-group="crachas">
+      <div class="hub-group-head"><div class="logo">Credenciais &amp; <span class="accent">Crachás</span></div><span class="chev">&#9656;</span></div>
+      <div class="hub-group-items">
+        <div class="hub-item" data-mod="crachas" data-target="main"><span class="ic">&#128179;</span>QR Login &amp; Lenel</div>
+      </div>
     </div>
-    <div class="hub-item" data-mod="crachas" data-target="main"><span class="ic">&#128179;</span>QR Login &amp; Lenel</div>
 
-    <div class="hub-group-head">
-      <div class="logo">Controle de <span class="accent">Faltantes</span></div>
+    <div class="hub-group" data-group="faltantes">
+      <div class="hub-group-head"><div class="logo">Controle de <span class="accent">Faltantes</span></div><span class="chev">&#9656;</span></div>
+      <div class="hub-group-items">
+        <div class="hub-item" data-mod="faltantes" data-target="main"><span class="ic">&#128230;</span>Análise de Faltantes</div>
+      </div>
     </div>
-    <div class="hub-item" data-mod="faltantes" data-target="main"><span class="ic">&#128230;</span>Análise de Faltantes</div>
   </aside>
   <main id="hubMain">
     <iframe id="frame-diaristas" class="hub-frame"></iframe>
@@ -100,6 +114,9 @@ function highlightActive(mod, target){
   document.querySelectorAll('.hub-item').forEach(el=>{
     el.classList.toggle('active', el.dataset.mod===mod && el.dataset.target===target);
   });
+  document.querySelectorAll('.hub-group').forEach(g=>{
+    g.classList.toggle('open', g.dataset.group===mod);
+  });
 }
 
 function sendNavigate(mod, target){
@@ -131,6 +148,18 @@ function activateModuleAndNavigate(mod, target){
 
 document.querySelectorAll('.hub-item').forEach(el=>{
   el.addEventListener('click', ()=> activateModuleAndNavigate(el.dataset.mod, el.dataset.target));
+});
+
+document.querySelectorAll('.hub-group-head').forEach(head=>{
+  head.addEventListener('click', ()=>{
+    const group = head.closest('.hub-group');
+    const wasOpen = group.classList.contains('open');
+    document.querySelectorAll('.hub-group').forEach(g=>g.classList.remove('open'));
+    if(!wasOpen){
+      group.classList.add('open');
+      group.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
 });
 
 // módulo padrão carrega na hora
