@@ -165,7 +165,12 @@ document.querySelectorAll('.kn-private-app').forEach(el=>{
     el.classList.add('active');
     const frame = document.getElementById('frame-private');
     const url = el.dataset.privateUrl;
-    if(frame.src !== url) frame.src = url;
+
+    // Sempre busca a versão publicada mais recente do app.
+    // O parâmetro _knv evita que o iframe da Central fique preso em uma cópia antiga do navegador.
+    const freshUrl = new URL(url, window.location.href);
+    freshUrl.searchParams.set('_knv', Date.now().toString());
+    frame.src = freshUrl.href;
     setMainView('private');
   });
 });
